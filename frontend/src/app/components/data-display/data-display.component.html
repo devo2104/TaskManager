@@ -1,0 +1,60 @@
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" routerLink="/">Task Manager</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item" *ngIf="isAuthenticated">
+          <button class="nav-link" (click)="logout()">Logout</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+<div class="container mt-4">
+  <div *ngIf="isAuthenticated">
+    <h2>Welcome to the Dashboard!</h2>
+    <button class="btn btn-danger" (click)="showOperations()">Show Operations</button>
+
+    <div *ngIf="showOperationsFlag && isSuperuser; else notSuperuser">
+      <!-- Show operations buttons only if the flag is true -->
+      <button *ngIf="isSuperuser" class="btn btn-success" (click)="redirectToCreateTaskPage()">Create a new Task</button>
+      <button *ngIf="isSuperuser" class="btn btn-primary" (click)="redirectToCreateEmployeePage()">Create a new Employee</button>
+    </div>
+
+    <!-- Display this message if the user is not a superuser and showOperationsFlag is false -->
+    <ng-template #notSuperuser>
+      <p *ngIf="showOperationsFlag" class="text-danger">You are not a superuser.</p>
+    </ng-template>
+
+    <div *ngIf="tasks.length > 0">
+      <h1>Task List</h1>
+      <ul class="list-group">
+        <li class="list-group-item" *ngFor="let task of tasks">
+          <button class="btn btn-link" (click)="redirectToTaskDetailPage(task.id)">Task {{task.id}}</button>
+          <p><strong>Description:</strong> {{ task.description }}</p>
+          <p><strong>Status:</strong> {{ task.status ? 'Done' : 'To Do' }}</p>
+          <p><strong>Employee-Id:</strong> {{ task.employee }}</p>
+          <!-- Add more fields as needed -->
+          <button class="btn btn-warning" (click)="redirectToUpdateTaskPage(task.id)">Edit Task</button>
+          <button *ngIf="isSuperuser" class="btn btn-danger" (click)="redirectToDeleteTaskPage(task.id)">Delete Task</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div *ngIf="!isAuthenticated" class="mt-5">
+    <p class="text-danger">You are not authenticated. Please log in.</p>
+    <!-- Optionally, provide a link to the login page -->
+  </div>
+</div>
+
+<footer class="mt-5 text-center">
+  <p>&copy; 2024 Task Manager. All rights reserved.</p>
+</footer>

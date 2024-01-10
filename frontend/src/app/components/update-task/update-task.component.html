@@ -1,0 +1,36 @@
+<div class="container mt-5">
+  <h1 class="mb-4">Update Task</h1>
+  <form (submit)="updateTask()" class="mb-4">
+    <div *ngIf="isSuperuser" class="form-group">
+      <label for="description">Description:</label>
+      <input type="text" id="description" name="description" [(ngModel)]="taskDescription" class="form-control" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="status">Status:</label>
+      <select id="status" name="status" [(ngModel)]="taskStatus" class="form-control" required>
+        <option value="true">Complete</option>
+        <option value="false">Incomplete</option>
+      </select>
+    </div>
+    
+    <div *ngIf="isSuperuser" class="form-group">
+      <label for="employee">Assign to:</label>
+      <select id="employee" name="employee" [(ngModel)]="selectedEmployee" class="form-control">
+        <option *ngFor="let employee of employees" [value]="employee.id">{{ employee.id }}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary mr-5">Update Task</button>
+    </div>
+  </form>
+  
+  <div class="text-center">
+    <button (click)="redirectToHomePage()" class="btn btn-secondary">Go to Home Page</button>
+  </div>
+  
+  <footer class="mb-5 text-center text-muted">
+    <p>&copy; 2024 Task Manager App. All rights reserved.</p>
+  </footer>
+</div>

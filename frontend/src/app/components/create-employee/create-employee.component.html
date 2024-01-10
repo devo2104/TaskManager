@@ -1,0 +1,22 @@
+<div class="container mt-5">
+  <h2 class="mb-4">Create Employee</h2>
+  <form [formGroup]="employeeForm" (ngSubmit)="createEmployee()">
+    <div class="mb-3">
+      <label for="firstName" class="form-label">First Name:</label>
+      <input type="text" id="firstName" formControlName="first_name" class="form-control" required>
+      <div *ngIf="employeeForm.get('first_name').hasError('required')" class="text-danger">
+        First Name is required.
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="lastName" class="form-label">Last Name:</label>
+      <input type="text" id="lastName" formControlName="last_name" class="form-control" required>
+      <div *ngIf="employeeForm.get('last_name').hasError('required')" class="text-danger">
+        Last Name is required.
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="employeeForm.invalid">Create Employee</button>
+  </form>
+</div>

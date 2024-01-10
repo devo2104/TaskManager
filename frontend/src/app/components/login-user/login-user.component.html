@@ -1,0 +1,23 @@
+<!-- login.component.html -->
+
+<div class="container mt-5 text-center">
+  <h2 class="mb-4">Login User</h2>
+
+  <form [formGroup]="loginForm" (ngSubmit)="login()" class="mx-auto" style="max-width: 400px">
+    <div class="mb-3">
+      <label for="username" class="form-label">Username:</label>
+      <input type="text" id="username" formControlName="username" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="password" class="form-label">Password:</label>
+      <input type="password" id="password" formControlName="password" class="form-control" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-block">Login</button>
+  </form>
+
+  <footer class="mt-4">
+    <p>&copy; 2024 Task Manager All rights reserved.</p>
+  </footer>
+</div>

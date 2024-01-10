@@ -1,0 +1,26 @@
+<div class="container mt-5">
+  <h1 class="mb-4">Create Task</h1>
+  <form (submit)="createTask()" class="mb-4">
+    <div class="mb-3">
+      <label for="description" class="form-label">Description:</label>
+      <input type="text" id="description" name="description" [(ngModel)]="taskDescription" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="status" class="form-label">Status:</label>
+      <select id="status" name="status" [(ngModel)]="taskStatus" class="form-control" required>
+        <option value="true">Complete</option>
+        <option value="false">Incomplete</option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label for="employee" class="form-label">Assign to:</label>
+      <select id="employee" name="employee" [(ngModel)]="selectedEmployee" class="form-control">
+        <option *ngFor="let employee of employees" [value]="employee.id">{{ employee.id }}</option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create Task</button>
+  </form>
+</div>
