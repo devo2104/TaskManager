@@ -1,3 +1,4 @@
+from django.utils import timezone
 from django.http import JsonResponse
 from .models import Task, Employee, User
 from django.core.serializers import serialize
@@ -111,6 +112,7 @@ def task_update_for_regular_user(request, pk):
     data = json.loads(request.body.decode('utf-8')) # convert json to python dictionary
     status = data.get('status', '')
     task.status = True if status == "true" else False
+    task.completed_at = timezone.now()
     task.save()
     serialized_task = serialize('json', [task])
     serialized_task = json.loads(serialized_task)
@@ -243,3 +245,12 @@ def get_all_tasks_for_this_user(request, username):
     # <QuerySet [<Task: The task is assgined to  = Deepak Singh and taskName = This is assigned to Deepak!!>]>
     task_serializer = TaskSerializer(tasks_assigned_to_emp, many=True)
     return JsonResponse({'tasks': task_serializer.data})
+
+
+
+def analytics(request):
+    total_tasks = Task.objects.count()
+    completed_tasks = Task.objects.filter(completed_at__isnull=False).count()
+    completion_rate = (completed_tasks / total_tasks) * 100 if total_tasks > 0 else 0
+
+    return JsonResponse({'completion_rate': completion_rate})

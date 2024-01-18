@@ -12,15 +12,19 @@ import { LocalstorageService } from 'src/app/services/locaStorage-service/locals
 
 export class DataDisplayComponent implements OnInit {
   tasks: any[] = [];
+  employees: any[] = []
   isAuthenticated: boolean = false;
   isSuperuser: boolean = this.authService.getSuperUser();
   showOperationsFlag: boolean = false;
+  TaskCompletionPercentage: number = 0.00
 
   showOperations() {
     this.showOperationsFlag = true;
   }
 
-  constructor(private apiService: ApiService, private router: Router, private authService: AuthServiceService, private storageService: LocalstorageService) { }
+  constructor(private apiService: ApiService, private router: Router, private authService: AuthServiceService, private storageService: LocalstorageService) {
+    this.isSuperuser = authService.getSuperUser();
+   }
 
   ngOnInit(): void {
     this.isAuthenticated = this.authService.isAuthenticated();
@@ -57,6 +61,20 @@ export class DataDisplayComponent implements OnInit {
 
   redirectToCreateEmployeePage(): void{
     this.router.navigate(['/create-employee'])
+  }
+
+  showAnalytics() : void{
+    this.apiService.getAnalytics().subscribe(response => {
+      this.TaskCompletionPercentage = response.completion_rate
+      console.log(response)
+    })
+  }
+
+  showAllEmployees() :void{
+    this.apiService.getAllEmployees().subscribe(response => {
+      this.employees = response
+      console.log(response);
+    })
   }
 
   logout() {

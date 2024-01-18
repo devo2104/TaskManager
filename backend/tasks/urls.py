@@ -14,4 +14,5 @@ urlpatterns = [
     path('createEmployee/', views.create_employee, name='create-employee'),   
     path('user/<str:username>/', views.get_all_tasks_for_this_user),
     path('updateRegularUser/<int:pk>/', views.task_update_for_regular_user),
+    path('analytics/', views.analytics)
 ]

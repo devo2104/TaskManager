@@ -14,6 +14,8 @@ class Task(models.Model):
 
     # create Relationships  
     employee = models.ForeignKey('Employee', on_delete=models.CASCADE)
+
+    completed_at = models.DateTimeField(null=True, blank=True)
    
 
     def __str__(self): 

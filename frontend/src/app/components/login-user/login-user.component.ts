@@ -32,12 +32,14 @@ export class LoginUserComponent {
             const username = response.user.username
             console.log(username)
             this.apiService.checkSuperUser(username).subscribe(response => {
-              const isSuperuser = response.superUser;
+              const isSuperuser =
+               response.superUser;
               localStorage.setItem('super-user', isSuperuser)
               console.log(response)
+              this.storageService.setUsername(username)
+              this.router.navigate(['/'])
             })
-            this.storageService.setUsername(username)
-            this.router.navigate(['/'])
+            // Write independent 
           }
       )
     }

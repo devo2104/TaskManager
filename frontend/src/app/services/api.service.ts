@@ -7,6 +7,7 @@ import { Observable, ObservableLike } from 'rxjs';
 })
 export class ApiService {
   private apiUrl = 'http://localhost:8000';  // Replace with your Django backend URL
+  private javaUrl = 'http://localhost:8080';
 
   constructor(private http: HttpClient) { }
 
@@ -56,5 +57,13 @@ export class ApiService {
 
   updateTaskByRegularUser(taskId: number, taskData: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/tasks/updateRegularUser/${taskId}/`, taskData)
+  }
+
+  getAllEmployees(): Observable<any>{
+    return this.http.get(`${this.javaUrl}/api/v1/employees`);
+  }
+
+  getAnalytics(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/tasks/analytics/`)
   }
 }

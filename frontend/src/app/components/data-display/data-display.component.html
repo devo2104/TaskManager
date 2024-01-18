@@ -16,16 +16,37 @@
   </div>
 </nav>
 
+{{isSuperuser}}
 
 <div class="container mt-4">
   <div *ngIf="isAuthenticated">
     <h2>Welcome to the Dashboard!</h2>
     <button class="btn btn-danger" (click)="showOperations()">Show Operations</button>
+    <br>
+    <button *ngIf="isSuperuser" class="btn btn-info mt-3" (click)="showAnalytics()">Show Analytics</button>
+       <p *ngIf="TaskCompletionPercentage > 0.00"> {{TaskCompletionPercentage}}</p>
+    <br> <br>
+
+    <label>
+      Is Superuser:
+      <input type="checkbox" [(ngModel)]="isSuperuser">
+    </label>
 
     <div *ngIf="showOperationsFlag && isSuperuser; else notSuperuser">
       <!-- Show operations buttons only if the flag is true -->
       <button *ngIf="isSuperuser" class="btn btn-success" (click)="redirectToCreateTaskPage()">Create a new Task</button>
       <button *ngIf="isSuperuser" class="btn btn-primary" (click)="redirectToCreateEmployeePage()">Create a new Employee</button>
+      <button *ngIf="isSuperuser" class="btn btn-warning" (click)="showAllEmployees()">Show All Employees</button>
+    </div>
+
+    <div *ngIf="employees.length > 0">
+      <h1> Employees </h1>
+      <ul class="list-group">
+        <li class="list-group-item" *ngFor="let emp of employees">
+          <button class="btn btn-link"> Employee Id  - {{emp.id}}</button>
+          <p><strong>Full Name : </strong> {{ emp.first_name }} {{ emp.last_name }}</p>
+        </li>
+      </ul>
     </div>
 
     <!-- Display this message if the user is not a superuser and showOperationsFlag is false -->
