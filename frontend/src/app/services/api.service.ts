@@ -5,8 +5,9 @@ import { Observable, ObservableLike } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
+
 export class ApiService {
-  private apiUrl = 'http://localhost:8000';  // Replace with your Django backend URL
+  private apiUrl = 'http://65.0.27.176:8000';  // Replace with your Django backend URL
   private javaUrl = 'http://localhost:8080';
 
   constructor(private http: HttpClient) { }
